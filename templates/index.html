@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mirrord Guestbook (Python + Redis)</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 760px; margin: 2rem auto; }
+    .center { text-align: center; }
+    .logo { height: 48px; margin-bottom: 0.5rem; }
+    h1 { margin: 0.5rem 0 1.2rem; }
+    form { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid #d9d9d9;
+      border-radius: 3px;
+      padding: 0.55rem;
+      font-size: 14px;
+    }
+    textarea { min-height: 80px; resize: vertical; }
+    button {
+      width: 145px;
+      border: 0;
+      border-radius: 3px;
+      padding: 0.55rem 0.8rem;
+      color: #fff;
+      background: #1e90ff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    article { border: 1px solid #ddd; border-radius: 8px; padding: 0.8rem 1rem; margin-bottom: 0.8rem; }
+    .meta { color: #666; font-size: 12px; margin-bottom: 0.3rem; }
+    .message { margin: 0; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <img class="logo" src="https://raw.githubusercontent.com/metalbear-co/mirrord/main/images/logo.svg" alt="mirrord logo" />
+    <h1>Welcome to mirrord Guestbook</h1>
+  </div>
+
+  <form method="post" action="/note">
+    <input id="name" name="name" type="text" placeholder="Your Name" />
+    <textarea id="message" name="message" required placeholder="Your Message"></textarea>
+    <button type="submit">Sign Guestbook</button>
+  </form>
+
+  <h2>Messages:</h2>
+
+  {% for entry in entries %}
+    <article>
+      <div class="meta"><strong>{{ entry.name }}</strong> - {{ entry.created_at }}</div>
+      <p class="message">{{ entry.message }}</p>
+    </article>
+  {% else %}
+    <p>No messages yet.</p>
+  {% endfor %}
+</body>
+</html>
