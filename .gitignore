@@ -3,4 +3,3 @@ __pycache__/
 *.pyc
 .env
 SECURITY-POSTURE.md
-.vscode/
