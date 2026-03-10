@@ -6,7 +6,12 @@ from flask import Flask, redirect, render_template, request, url_for
 
 
 REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-REDIS_PORT = int(os.getenv("REDIS_PORT", "6379"))
+_raw_port = os.getenv("REDIS_PORT", "6379")
+# Handle both "6379" and "tcp://host:6379" (Kubernetes service URL format)
+if ":" in _raw_port:
+    REDIS_PORT = int(_raw_port.rstrip("/").rsplit(":", 1)[-1])
+else:
+    REDIS_PORT = int(_raw_port)
 REDIS_DB = int(os.getenv("REDIS_DB", "0"))
 REDIS_KEY = os.getenv("REDIS_KEY", "knote:entries")
 
